@@ -46,7 +46,7 @@ jobs:
         id: changelog
         uses: metcalfc/changelog-generator@v3.0.0
         with:
-          myToken: ${{ secrets.RELEASE  }}
+          myToken: ${{ secrets.TEST  }}
 
       # Creating a minor release 
       - name: Create Minor Release
@@ -54,7 +54,7 @@ jobs:
         id: create_minor_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE }}
+          GITHUB_TOKEN: ${{ secrets.TEST }}
         with:
           tag_name: v${{ steps.semvers.outputs.minor }}
           release_name: Release ${{ steps.semvers.outputs.minor }}
@@ -69,7 +69,7 @@ jobs:
       #   id: create_release
       #   uses: actions/create-release@v1
       #   env:
-      #     GITHUB_TOKEN: ${{ secrets.RELEASE  }} 
+      #     GITHUB_TOKEN: ${{ secrets.TEST  }} 
       #   with:
       #     tag_name: v${{ steps.semvers.outputs.major }}
       #     release_name: Release ${{ steps.semvers.outputs.major }}
