@@ -4,9 +4,6 @@
 name: Auto-Release
 
 on:
-  # push:
-  #   branches:
-  #   - main
   schedule:
   - cron: '0 19 * * 6' # Every sunday at 20 DK time
   - cron: '*/5 * * * *' # Test every 5 min
@@ -46,35 +43,19 @@ jobs:
         id: changelog
         uses: metcalfc/changelog-generator@v3.0.0
         with:
-          myToken: ${{ secrets.TEST  }}
+          myToken: ${{ secrets.TEST}}
 
-      # Creating a minor release 
-      - name: Create Minor Release
-        if: ${{ github.event_name == 'push'}}
-        id: create_minor_release
+      # Creating the New Release
+      - name: Create New Release
+        id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.TEST }}
+          GITHUB_TOKEN: ${{ secrets.TEST }} 
         with:
-          tag_name: v${{ steps.semvers.outputs.minor }}
-          release_name: Release ${{ steps.semvers.outputs.minor }}
+          tag_name: v${{ steps.semvers.outputs.patch }}
+          release_name: Release ${{ steps.semvers.outputs.patch }}
           body: |
-            Minor release
+            New Release
             ${{ steps.changelog.outputs.changelog }}
           draft: false
           prerelease: false
-
-      # Creating the major release
-      # - name: Create Major Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.TEST  }} 
-      #   with:
-      #     tag_name: v${{ steps.semvers.outputs.major }}
-      #     release_name: Release ${{ steps.semvers.outputs.major }}
-      #     body: |
-      #       Major release
-      #       ${{ steps.changelog.outputs.changelog }}
-      #     draft: false
-      #     prerelease: false
