@@ -9,7 +9,7 @@ on:
     - main
   schedule:
   - cron: '0 19 * * 6' # Every sunday at 20 DK time
-  - cron: '*/5 * * * *' # Test every 5 min
+  # - cron: '*/5 * * * *' # Test every 5 min
 
 jobs:
   create-release:
@@ -65,16 +65,16 @@ jobs:
           prerelease: false
 
       # Creating the major release
-      - name: Create Major Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE  }} 
-        with:
-          tag_name: v${{ steps.semvers.outputs.major }}
-          release_name: Release ${{ steps.semvers.outputs.major }}
-          body: |
-            Major release
-            ${{ steps.changelog.outputs.changelog }}
-          draft: false
-          prerelease: false
+      # - name: Create Major Release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.RELEASE  }} 
+      #   with:
+      #     tag_name: v${{ steps.semvers.outputs.major }}
+      #     release_name: Release ${{ steps.semvers.outputs.major }}
+      #     body: |
+      #       Major release
+      #       ${{ steps.changelog.outputs.changelog }}
+      #     draft: false
+      #     prerelease: false
